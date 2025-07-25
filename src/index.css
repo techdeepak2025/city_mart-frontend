@@ -1,0 +1,22 @@
+@import "tailwindcss";
+
+/* Custom Scrollbar Styles */
+.scrollbar-thin {
+  scrollbar-width: thin;
+  scrollbar-color: #939aa4 transparent;
+}
+
+.scrollbar-thin::-webkit-scrollbar {
+  width: 6px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background-color: #94a3b8;
+  border-radius: 8px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
