@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 import { ChevronDown, ChevronUp } from "lucide-react";
 
 import axiosInstance, { BASE_URL } from "../../utils/axiosInstance";
-import InventoryHeader from "../../components/inventory-panel/InventoryHeader";
+import InventoryHeader from "../inventory-panel/InventoryHeader";
 import AddStockForm from "./AddStockForm";
 
 export default function InventoryDashboardPage() {
