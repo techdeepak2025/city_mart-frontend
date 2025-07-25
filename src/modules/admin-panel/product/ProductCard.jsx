@@ -10,7 +10,7 @@ export default function ProductCard({
   onImageError,
 }) {
   const productImage = product?.images?.[0];
-  const brandImage = product?.brand?.logo;
+  const brandImage = product?.brand?.logo;  
 
   const hasValidImage = productImage?.url && !hasProductImageError;
   const productImageUrl = productImage?.url;
@@ -22,8 +22,14 @@ export default function ProductCard({
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.3 }}
-      className="bg-white rounded-xl shadow p-3 flex flex-col gap-3"
+      className="bg-white rounded-xl shadow p-3 relative flex flex-col gap-3"
     >
+      {/* Top Right Actions */}
+      <div className="absolute top-2 right-2 z-10 flex gap-2">
+        <EditButton onClick={() => onEdit(product)} />
+        <DeleteButton onClick={() => onDelete(product)} />
+      </div>
+
       {/* Image */}
       <div className="flex justify-center h-40 bg-gray-100 p-2 rounded-lg">
         {hasValidImage ? (
@@ -65,16 +71,12 @@ export default function ProductCard({
           </div>
         )}
 
-        {/* Price or other info */}
+        {/* Price */}
         {product.mrp && (
-          <p className="mt-2 text-sm text-green-600 font-semibold">₹{product.mrp}</p>
+          <p className="mt-2 text-sm text-green-600 font-semibold">
+            ₹{product.mrp}
+          </p>
         )}
-      </div>
-
-      {/* Actions */}
-      <div className="flex justify-between items-center mt-2">
-        <EditButton onClick={() => onEdit(product)} />
-        <DeleteButton onClick={() => onDelete(product)} />
       </div>
     </motion.div>
   );
