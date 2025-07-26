@@ -1,8 +1,8 @@
 import axios from "axios";
 
 // Base API URL
-export const BASE_URL = "https://city-mart-backend.vercel.app/";
-// export const BASE_URL = "http://localhost:5000";
+// export const BASE_URL = "https://city-mart-backend.vercel.app";
+export const BASE_URL = "http://localhost:5000";
 
 // Create Axios instance
 const axiosInstance = axios.create({
