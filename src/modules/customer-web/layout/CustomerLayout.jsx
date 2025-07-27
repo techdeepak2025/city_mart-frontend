@@ -16,7 +16,7 @@ export default function CustomerLayout() {
         cartCount={totalItems}
       />
 
-      <main className="pt-[65px] sm:pt-[100px] md:pt-[100px] lg:pt-[100px] max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <main className="pt-[65px] sm:pt-[100px] md:pt-[100px] lg:pt-[100px]">
         <Outlet />
       </main>
 
