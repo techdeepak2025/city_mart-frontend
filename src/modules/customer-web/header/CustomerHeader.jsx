@@ -41,13 +41,11 @@ export default function CustomerHeader({ onCartClick, cartCount = 0 }) {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  // When address is selected
   const handleSelectAddress = (address) => {
     setSelectedAddress(address);
     localStorage.setItem("selectedAddress", JSON.stringify(address));
   };
 
-  // After successful login
   const handleLoginSuccess = () => {
     const customerData = { phone: "******", name: "Guest User" };
     localStorage.setItem("customer", JSON.stringify(customerData));
@@ -56,7 +54,6 @@ export default function CustomerHeader({ onCartClick, cartCount = 0 }) {
     setIsLoginOpen(false);
   };
 
-  // Logout logic
   const handleLogout = useCallback(() => {
     localStorage.removeItem("customer");
     localStorage.removeItem("isLoggedIn");
@@ -65,7 +62,6 @@ export default function CustomerHeader({ onCartClick, cartCount = 0 }) {
     navigate("/", { replace: true });
   }, [navigate]);
 
-  // Render login/account
   const renderAuthControls = (isMobile = false) =>
     !isLoggedIn ? (
       <button
@@ -87,9 +83,9 @@ export default function CustomerHeader({ onCartClick, cartCount = 0 }) {
 
   return (
     <>
-      <header className="fixed w-full bg-white shadow z-50">
+      <header className="fixed h-[60px] w-full bg-gradient-to-tr from-purple-100 via-blue-200 to-blue-300 shadow-2xl border-b border-blue-200 backdrop-blur-md z-50">
         <div className="max-w-7xl mx-auto px-2 sm:px-4 py-2 relative">
-          {/* --- Desktop Header --- */}
+          {/* Desktop Header */}
           <div className="hidden sm:flex items-center justify-between gap-4">
             <div className="flex items-center gap-4">
               <Logo />
@@ -109,7 +105,7 @@ export default function CustomerHeader({ onCartClick, cartCount = 0 }) {
             </div>
           </div>
 
-          {/* --- Mobile Header --- */}
+          {/* Mobile Header */}
           <div className="sm:hidden flex flex-col gap-2">
             <div className="flex items-center gap-3" ref={dropdownRef}>
               <div className="flex-1 min-w-0">

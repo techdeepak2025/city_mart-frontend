@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import axiosInstance, { BASE_URL } from "../../../utils/axiosInstance";
+import axiosInstance from "../../../utils/axiosInstance";
+import DotsLoader from "../../../ui/loader/DotsLoader"; // optional, use your own loader
 
 export default function Categories() {
   const [categories, setCategories] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true); // renamed
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -15,7 +16,7 @@ export default function Categories() {
       } catch (err) {
         console.error("Failed to load categories:", err);
       } finally {
-        setLoading(false);
+        setIsLoading(false);
       }
     };
     fetchCategories();
@@ -23,10 +24,13 @@ export default function Categories() {
 
   return (
     <section className="p-2 sm:p-4">
-      {loading ? (
-        <p className="text-sm text-gray-500">Loading categories...</p>
+      {isLoading ? (
+        <div className="flex justify-center items-center py-10 text-sm text-gray-500">
+          <span className="mr-2">Loading categories</span>
+          <DotsLoader />
+        </div>
       ) : (
-        <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-10 gap-2 space-y-4 ">
+        <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-10 gap-2">
           {categories.map((cat) => (
             <Link
               key={cat._id}

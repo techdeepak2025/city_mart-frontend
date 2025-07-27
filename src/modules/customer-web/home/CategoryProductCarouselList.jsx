@@ -2,18 +2,18 @@ import React, { useEffect, useState } from "react";
 import axiosInstance from "../../../utils/axiosInstance";
 import { ProductCarousel } from "../../../ui/carousel";
 import ProductCard from "../product-list/ProductCard";
+import {DotsLoader} from "../../../ui/loader"; 
 
 export default function CategoryProductCarouselList() {
   const [carousels, setCarousels] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true); 
 
   useEffect(() => {
     const fetchCategoryCarousels = async () => {
       try {
         const { data: categories } = await axiosInstance.get("/categories");
 
-        // ✅ Choose category indexes to display carousels for
-        const allowedIndexes = [0,1,9,10,11,14];
+        const allowedIndexes = [0, 1, 9, 10, 11, 14];
         const selectedCategories = allowedIndexes
           .map((i) => categories[i])
           .filter(Boolean);
@@ -32,18 +32,19 @@ export default function CategoryProductCarouselList() {
       } catch (err) {
         console.error("Error fetching category carousels:", err);
       } finally {
-        setLoading(false);
+        setIsLoading(false);
       }
     };
 
     fetchCategoryCarousels();
   }, []);
 
-  if (loading)
+  if (isLoading)
     return (
-      <p className="text-center text-sm text-gray-500 py-4">
-        Loading category carousels...
-      </p>
+      <div className="flex justify-center items-center py-8 text-gray-500 text-sm">
+        <span className="mr-2">Loading category carousels</span>
+        <DotsLoader />
+      </div>
     );
 
   return (

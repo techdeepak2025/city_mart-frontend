@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { Outlet } from "react-router-dom";
 import CustomerHeader from "../header/CustomerHeader";
-import {Drawer} from "../../../ui/layout";
+import { Drawer } from "../../../ui/layout";
 import Cart from "../cart/Cart";
 import { useCart } from "../../../context/CartContext";
 
 export default function CustomerLayout() {
-  const [isCartOpen, setIsCartOpen] = useState(false);  
+  const [isCartOpen, setIsCartOpen] = useState(false);
   const { totalItems } = useCart();
 
   return (
@@ -16,7 +16,7 @@ export default function CustomerLayout() {
         cartCount={totalItems}
       />
 
-      <main className="pt-26 sm:pt-16 md:pt-16 lg:pt-16 max-w-7xl mx-auto ">
+      <main className="pt-[100px] max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <Outlet />
       </main>
 

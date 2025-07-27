@@ -5,12 +5,13 @@ import axiosInstance from "../../../utils/axiosInstance";
 import ProductDetailCard from "./ProductDetailCard";
 import SimilarProductsSection from "./SimilarProductsSection";
 import ImageSection from "./ImageSection";
+import { GroceryLoader } from "../../../ui/loader"
 
 export default function ProductDetailPage() {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
   const [similarProducts, setSimilarProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
   const [selectedImage, setSelectedImage] = useState(null);
   const [zoomStyle, setZoomStyle] = useState({});
 
@@ -33,14 +34,19 @@ export default function ProductDetailPage() {
       } catch (err) {
         console.error("Error fetching product or similar products:", err);
       } finally {
-        setLoading(false);
+        setIsLoading(false);
       }
     };
 
     fetchProduct();
   }, [id]);
 
-  if (loading) return <div className="p-4">Loading...</div>;
+  if (isLoading)
+    return (
+      <div className="flex w-screen h-screen inset-0 bg-purple-100 shadow-lg justify-center items-center text-lg text-white">
+        <GroceryLoader />
+      </div>
+    );
   if (!product) return <div className="p-4">Product not found</div>;
 
   return (

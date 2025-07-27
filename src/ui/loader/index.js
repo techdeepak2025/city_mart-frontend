@@ -1,3 +1,3 @@
-export { default as AddButton } from "./DotsLoader";
-export { default as CancelButton } from "./GroceryLoader";
-export { default as DeleteButton } from "./SpinnerLoader";
+export { default as DotsLoader } from "./DotsLoader";
+export { default as GroceryLoader } from "./GroceryLoader";
+export { default as SpinnerLoader } from "./SpinnerLoader";

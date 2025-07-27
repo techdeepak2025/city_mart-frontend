@@ -5,6 +5,7 @@ import {
   LogOut,
   CircleUser,
   X,
+  UserCircle,
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { userNavigation } from "../../../navigation/userNavigation";
@@ -17,6 +18,18 @@ export default function Account({
   isMobile = false,
 }) {
   const handleClose = () => setIsDropdownOpen(false);
+
+  useEffect(() => {
+    const handleEscape = (e) => e.key === "Escape" && handleClose();
+    const handleScroll = () => !isMobile && isDropdownOpen && handleClose();
+
+    document.addEventListener("keydown", handleEscape);
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      document.removeEventListener("keydown", handleEscape);
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [isDropdownOpen, isMobile]);
 
   const menuItems = (
     <>
@@ -41,41 +54,28 @@ export default function Account({
     </>
   );
 
-  useEffect(() => {
-    const handleEscape = (e) => e.key === "Escape" && handleClose();
-    const handleScroll = () => !isMobile && isDropdownOpen && handleClose();
-
-    document.addEventListener("keydown", handleEscape);
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      document.removeEventListener("keydown", handleEscape);
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, [isDropdownOpen, isMobile]);
-
   return (
     <div className="relative z-50">
+      {/* Trigger Button */}
       <button
         onClick={() => setIsDropdownOpen((prev) => !prev)}
         className="flex items-center gap-1 text-gray-700 hover:text-blue-600"
       >
-        {isMobile && <CircleUser />}
-        <span className="hidden md:inline text-sm">Account</span>
-        {isDropdownOpen ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
-      </button>
-
-      {/* Overlay */}
-      <AnimatePresence>
-        {isDropdownOpen && (
-          <motion.div
-            onClick={handleClose}
-            className="fixed inset-0 sm:mt-15 bg-black/50 z-40 sm:z-0"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 0.5 }}
-            exit={{ opacity: 0 }}
-          />
+        {isMobile ? (
+          <CircleUser />
+        ) : (
+          <>
+            <span className="hidden md:inline font-semibold text-sm">
+              <UserCircle />
+            </span>
+            {isDropdownOpen ? (
+              <ChevronUp size={16} />
+            ) : (
+              <ChevronDown size={16} />
+            )}
+          </>
         )}
-      </AnimatePresence>
+      </button>
 
       {/* Desktop Dropdown */}
       <AnimatePresence>
@@ -95,34 +95,42 @@ export default function Account({
       {/* Mobile Drawer */}
       <AnimatePresence>
         {isMobile && isDropdownOpen && (
-          <motion.div
-            className="fixed top-0 right-0 w-64 h-full bg-white shadow-lg z-[60]"
-            initial={{ x: "100%" }}
-            animate={{ x: 0 }}
-            exit={{ x: "100%" }}
-            transition={{ type: "tween", duration: 0.3 }}
-          >
-            <div className="flex items-center justify-between px-4 py-3 border-b">
-              <div className="flex items-center gap-2 font-bold text-lg">
-                <img
-                  src="/logo.png"
-                  alt="Logo"
-                  className="h-5 w-5 object-contain"
-                />
-                <span>
-                  <span className="text-purple-700">CITY</span>
-                  <span className="text-orange-400">MART</span>
-                </span>
+          <>
+            {/* Backdrop */}
+            <motion.div
+              onClick={handleClose}
+              className="fixed inset-0 bg-black/50 z-40"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 0.5 }}
+              exit={{ opacity: 0 }}
+            />
+
+            {/* Drawer */}
+            <motion.div
+              className="fixed top-0 right-0 w-64 h-screen bg-white shadow-lg z-50"
+              initial={{ x: "100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "100%" }}
+              transition={{ type: "tween", duration: 0.3 }}
+            >
+              <div className="flex items-center justify-between px-4 py-3 border-b">
+                <div className="flex items-center gap-2 font-bold text-lg">
+                  <img src="/logo.png" alt="Logo" className="h-5 w-5" />
+                  <span>
+                    <span className="text-purple-700">CITY</span>
+                    <span className="text-orange-400">MART</span>
+                  </span>
+                </div>
+                <button
+                  onClick={handleClose}
+                  className="text-gray-600 hover:text-red-500"
+                >
+                  <X size={20} />
+                </button>
               </div>
-              <button
-                onClick={handleClose}
-                className="text-gray-600 hover:text-red-500"
-              >
-                <X size={20} />
-              </button>
-            </div>
-            <ul className="text-sm text-gray-700">{menuItems}</ul>
-          </motion.div>
+              <ul className="text-sm text-gray-700">{menuItems}</ul>
+            </motion.div>
+          </>
         )}
       </AnimatePresence>
     </div>

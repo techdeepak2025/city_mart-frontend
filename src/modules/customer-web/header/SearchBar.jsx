@@ -6,7 +6,7 @@ export default function SearchBar() {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate("/s"); // Navigate to your search page
+    navigate("/s"); 
   };
 
   return (

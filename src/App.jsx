@@ -5,12 +5,17 @@ import AdminRoutes from "./routes/AdminRoutes";
 import PanelRoutes from "./routes/PanelRoutes";
 import CustomerRoutes from "./routes/CustomerRoutes";
 import ProtectedRoute from "./modules/common/auth/ProtectedRoute";
+import GroceryLoader from "./ui/loader/GroceryLoader";
 
 export default function App() {
   return (
     <BrowserRouter>
       <Suspense
-        fallback={<div className="text-center mt-10 text-lg">Loading...</div>}
+        fallback={
+          <div className="flex w-screen h-screen inset-0 bg-purple-100 shadow-lg justify-center items-center text-lg text-white">
+            <GroceryLoader />
+          </div>
+        }
       >
         <Routes>
           {/* Public Routes */}

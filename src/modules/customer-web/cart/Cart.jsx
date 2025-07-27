@@ -8,6 +8,7 @@ import CartFooter from "./CartFooter";
 import LoginModal from "../login/LoginModal";
 import { dummyAddresses } from "../address/Addresses";
 import AddressDrawer from "../address/AddressDrawer";
+import emptyCartImage from "../../../assets/empty-cart.png.png";
 
 export default function Cart() {
   const { cartItems, removeItem, updateQty } = useCart();
@@ -47,9 +48,28 @@ export default function Cart() {
   const itemTotal = calculateItemTotal();
   const grandTotal = itemTotal + DELIVERY_CHARGE + HANDLING_CHARGE;
 
+  // Enhanced empty cart UI
   if (cartItems.length === 0) {
     return (
-      <div className="p-6 text-center text-gray-600">Your cart is empty.</div>
+      <div className="flex flex-col items-center justify-center h-[calc(100vh-64px)] text-center px-4 py-12">
+        <img
+          src={emptyCartImage}
+          alt="Empty cart"
+          className="w-64 h-auto mb-6"
+        />
+        <h2 className="text-2xl font-semibold text-gray-700 mb-2">
+          Your cart is empty
+        </h2>
+        <p className="text-gray-500 mb-6">
+          Looks like you haven't added anything yet.
+        </p>
+        <button
+          onClick={() => (window.location.href = "/")}
+          className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg shadow transition-all"
+        >
+          Start Shopping
+        </button>
+      </div>
     );
   }
 
