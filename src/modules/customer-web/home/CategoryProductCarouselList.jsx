@@ -13,7 +13,7 @@ export default function CategoryProductCarouselList() {
       try {
         const { data: categories } = await axiosInstance.get("/categories");
 
-        const allowedIndexes = [0, 1, 9, 10, 11, 14];
+        const allowedIndexes = [0, 1, 9, 10];
         const selectedCategories = allowedIndexes
           .map((i) => categories[i])
           .filter(Boolean);

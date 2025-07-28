@@ -69,7 +69,7 @@ export default function LoginPage() {
       className="min-h-screen flex items-center justify-center bg-cover bg-center bg-no-repeat"
       style={{
         backgroundImage:
-          "url('bg3.jpg')",
+          "url('bg2.jpg')",
       }}
     >
       <div className="bg-white bg-opacity-90 p-6 rounded-xl shadow-lg w-full max-w-md space-y-6 backdrop-blur-sm">

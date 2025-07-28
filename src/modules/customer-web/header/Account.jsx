@@ -17,7 +17,10 @@ export default function Account({
   handleLogout,
   isMobile = false,
 }) {
-  const handleClose = () => setIsDropdownOpen(false);
+  const handleClose = () => {
+    setIsDropdownOpen(false);
+    setTimeout(() => window.scrollTo({ top: 0 }), 200);
+  };
 
   useEffect(() => {
     const handleEscape = (e) => e.key === "Escape" && handleClose();
@@ -34,9 +37,10 @@ export default function Account({
   const menuItems = (
     <>
       {userNavigation(handleClose).map((item, index) => (
-        <li key={index} onClick={item.onClick}>
+        <li key={index}>
           <Link
             to={item.to}
+            onClick={item.onClick}
             className="px-4 py-2 flex items-center gap-2 hover:bg-gray-100"
           >
             <item.icon size={16} />
@@ -56,7 +60,6 @@ export default function Account({
 
   return (
     <div className="relative z-50">
-      {/* Trigger Button */}
       <button
         onClick={() => setIsDropdownOpen((prev) => !prev)}
         className="flex items-center gap-1 text-gray-700 hover:text-blue-600"
@@ -68,24 +71,20 @@ export default function Account({
             <span className="hidden md:inline font-semibold text-sm">
               <UserCircle />
             </span>
-            {isDropdownOpen ? (
-              <ChevronUp size={16} />
-            ) : (
-              <ChevronDown size={16} />
-            )}
+            {isDropdownOpen ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
           </>
         )}
       </button>
 
       {/* Desktop Dropdown */}
-      <AnimatePresence>
+      <AnimatePresence mode="wait">
         {!isMobile && isDropdownOpen && (
           <motion.div
             className="absolute right-0 mt-2 w-52 bg-white border border-gray-400 rounded shadow-lg z-50"
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.2 }}
+            transition={{ duration: 0.2, ease: "easeInOut" }}
           >
             <ul className="text-sm text-gray-700">{menuItems}</ul>
           </motion.div>
@@ -93,10 +92,9 @@ export default function Account({
       </AnimatePresence>
 
       {/* Mobile Drawer */}
-      <AnimatePresence>
+      <AnimatePresence mode="wait">
         {isMobile && isDropdownOpen && (
           <>
-            {/* Backdrop */}
             <motion.div
               onClick={handleClose}
               className="fixed inset-0 bg-black/50 z-40"
@@ -105,7 +103,6 @@ export default function Account({
               exit={{ opacity: 0 }}
             />
 
-            {/* Drawer */}
             <motion.div
               className="fixed top-0 right-0 w-64 h-screen bg-white shadow-lg z-50"
               initial={{ x: "100%" }}
