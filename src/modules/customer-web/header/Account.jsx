@@ -54,6 +54,7 @@ export default function Account({
 
   return (
     <div className="relative z-50">
+      {/* Trigger Button */}
       <button
         onClick={() => setIsDropdownOpen((prev) => !prev)}
         className="flex items-center gap-1 text-gray-700 hover:text-blue-600"
@@ -63,60 +64,71 @@ export default function Account({
         ) : (
           <>
             <UserCircle />
-            {isDropdownOpen ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
+            {isDropdownOpen ? (
+              <ChevronUp size={16} />
+            ) : (
+              <ChevronDown size={16} />
+            )}
           </>
         )}
       </button>
 
+      {/* AnimatePresence Dropdown or Drawer */}
       <AnimatePresence mode="wait">
-        {!isMobile && isDropdownOpen && (
-          <motion.div
-            className="absolute right-0 mt-2 w-52 bg-white border border-gray-400 rounded shadow-lg z-50"
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.2, ease: "easeInOut" }}
-          >
-            <ul className="text-sm text-gray-700">{menuItems}</ul>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      <AnimatePresence mode="wait">
-        {isMobile && isDropdownOpen && (
+        {isDropdownOpen && (
           <>
+            {/* Overlay */}
             <motion.div
               onClick={handleClose}
-              className="fixed inset-0 bg-black/50 z-40"
+              className="fixed inset-0 h-screen bg-black/80 z-40"
               initial={{ opacity: 0 }}
               animate={{ opacity: 0.5 }}
               exit={{ opacity: 0 }}
             />
 
-            <motion.div
-              className="fixed top-0 right-0 w-64 h-screen bg-white shadow-lg z-50"
-              initial={{ x: "100%" }}
-              animate={{ x: 0 }}
-              exit={{ x: "100%" }}
-              transition={{ type: "tween", duration: 0.3 }}
-            >
-              <div className="flex items-center justify-between px-4 py-3 border-b">
-                <Link to="/" className="flex items-center gap-2 font-bold text-lg">
-                  <img src="/logo.png" alt="Logo" className="h-5 w-5" />
-                  <span>
-                    <span className="text-purple-700">CITY</span>
-                    <span className="text-orange-400">MART</span>
-                  </span>
-                </Link>
-                <button
-                  onClick={handleClose}
-                  className="text-gray-600 hover:text-red-500"
-                >
-                  <X size={20} />
-                </button>
-              </div>
-              <ul className="text-sm text-gray-700">{menuItems}</ul>
-            </motion.div>
+            {/* Desktop Dropdown */}
+            {!isMobile && (
+              <motion.div
+                className="absolute right-0 mt-2 w-52 bg-white border border-gray-400 rounded shadow-lg z-50"
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.2, ease: "easeInOut" }}
+              >
+                <ul className="text-sm text-gray-700">{menuItems}</ul>
+              </motion.div>
+            )}
+
+            {/* Mobile Drawer */}
+            {isMobile && (
+              <motion.div
+                className="fixed top-0 right-0 w-64 h-screen bg-white shadow-lg z-50"
+                initial={{ x: "100%" }}
+                animate={{ x: 0 }}
+                exit={{ x: "100%" }}
+                transition={{ type: "tween", duration: 0.3 }}
+              >
+                <div className="flex items-center justify-between px-4 py-3 border-b">
+                  <Link
+                    to="/"
+                    className="flex items-center gap-2 font-bold text-lg"
+                  >
+                    <img src="/logo.png" alt="Logo" className="h-5 w-5" />
+                    <span>
+                      <span className="text-purple-700">CITY</span>
+                      <span className="text-orange-400">MART</span>
+                    </span>
+                  </Link>
+                  <button
+                    onClick={handleClose}
+                    className="text-gray-600 hover:text-red-500"
+                  >
+                    <X size={20} />
+                  </button>
+                </div>
+                <ul className="text-sm text-gray-700">{menuItems}</ul>
+              </motion.div>
+            )}
           </>
         )}
       </AnimatePresence>
