@@ -101,13 +101,13 @@ export default function Account({
               transition={{ type: "tween", duration: 0.3 }}
             >
               <div className="flex items-center justify-between px-4 py-3 border-b">
-                <div className="flex items-center gap-2 font-bold text-lg">
+                <Link to="/" className="flex items-center gap-2 font-bold text-lg">
                   <img src="/logo.png" alt="Logo" className="h-5 w-5" />
                   <span>
                     <span className="text-purple-700">CITY</span>
                     <span className="text-orange-400">MART</span>
                   </span>
-                </div>
+                </Link>
                 <button
                   onClick={handleClose}
                   className="text-gray-600 hover:text-red-500"
