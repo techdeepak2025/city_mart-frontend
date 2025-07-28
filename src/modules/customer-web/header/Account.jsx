@@ -24,15 +24,9 @@ export default function Account({
 
   useEffect(() => {
     const handleEscape = (e) => e.key === "Escape" && handleClose();
-    const handleScroll = () => !isMobile && isDropdownOpen && handleClose();
-
     document.addEventListener("keydown", handleEscape);
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      document.removeEventListener("keydown", handleEscape);
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, [isDropdownOpen, isMobile]);
+    return () => document.removeEventListener("keydown", handleEscape);
+  }, [isDropdownOpen]);
 
   const menuItems = (
     <>
@@ -68,15 +62,12 @@ export default function Account({
           <CircleUser />
         ) : (
           <>
-            <span className="hidden md:inline font-semibold text-sm">
-              <UserCircle />
-            </span>
+            <UserCircle />
             {isDropdownOpen ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
           </>
         )}
       </button>
 
-      {/* Desktop Dropdown */}
       <AnimatePresence mode="wait">
         {!isMobile && isDropdownOpen && (
           <motion.div
@@ -91,7 +82,6 @@ export default function Account({
         )}
       </AnimatePresence>
 
-      {/* Mobile Drawer */}
       <AnimatePresence mode="wait">
         {isMobile && isDropdownOpen && (
           <>
